@@ -16,7 +16,10 @@ except socket.error as e:
 s.listen(2)
 print("Waiting for a connection, Server Started")
 
-players = [Player(0, 0, 50, 50, (255, 0, 0)), Player(100, 100, 50, 50, (0, 0, 255))]
+players = [Player(0, 0, 50, 50, (255, 0, 0)),
+           Player(100, 100, 50, 50, (0, 0, 255))]
+
+
 def threaded_client(conn, player):
     conn.send(pickle.dumps(players[player]))
     reply = ""
@@ -35,7 +38,7 @@ def threaded_client(conn, player):
                     reply = players[1]
                 print("Received: ", data)
                 print("Sending : ", reply)
-            
+
             conn.sendall(pickle.dumps(reply))
         except:
             break
@@ -43,11 +46,12 @@ def threaded_client(conn, player):
     print("Lost connection")
     conn.close()
 
+
 currentPlayer = 0
 if __name__ == "__main__":
     while True:
         conn, addr = s.accept()
         print("Connected to: ", addr)
-    
+
         start_new_thread(threaded_client, (conn, currentPlayer))
         currentPlayer += 1

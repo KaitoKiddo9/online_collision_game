@@ -7,6 +7,7 @@ height = 500
 win = pygame.display.set_mode((witdh, height))
 pygame.display.set_caption("Client")
 
+
 def redrawWindow(win, player, player2):
     win.fill((255, 255, 255))
     player.draw(win)
